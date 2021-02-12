@@ -23,6 +23,17 @@ def get_df_from_tuples(tuples):
                         columns=['description', 'code', 'amount', 'value'])
 
 
+def clean_dataframe(df):
+    print(df.columns)
+    df['code'] = df['code'].astype(int)
+    df['amount'] = df['amount'].astype(int)
+    df['value'] = df['value']\
+        .str.replace('.', '')\
+        .str.replace(',', '.')\
+        .astype(float)
+    return df
+
+
 def main():
     """ Process the data """
     pass
