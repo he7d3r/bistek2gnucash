@@ -7,6 +7,7 @@ __author__ = "Helder Geovane Gomes de Lima"
 __version__ = "0.1.0"
 __license__ = "MIT"
 
+import sys
 import re
 
 import pandas as pd
@@ -24,7 +25,6 @@ def get_df_from_tuples(tuples):
 
 
 def clean_dataframe(df):
-    print(df.columns)
     df['code'] = df['code'].astype(int)
     df['amount'] = df['amount'].astype(int)
     df['value'] = df['value']\
@@ -34,10 +34,19 @@ def clean_dataframe(df):
     return df
 
 
-def main():
-    """ Process the data """
-    pass
+def get_text(file_name):
+    with open(file_name, 'r') as f:
+        return f.read()
+
+
+def main(file_name):
+    """ Process the order data """
+    text = get_text(file_name)
+    tuples = get_item_tuples(text)
+    df = get_df_from_tuples(tuples)
+    clean_df = clean_dataframe(df)
+    print(clean_df.tail())
 
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1])

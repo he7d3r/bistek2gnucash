@@ -1,0 +1,82 @@
+Fulano de Tal
+
+Informamos que seu pedido de nº 1000000042 feito em 1 de fev de 2021 15:16:17 foi realizado.
+Assim que recebermos a aprovação de seu pagamento, enviaremos-lhe um e-mail de confirmação.
+
+Importante: Nos pagamentos realizados por boleto bancário, os produtos só serão separados e entregues após a identificação do pagamento em nosso sistema. Dessa forma, a entrega (ou retirada na loja) poderá ser adiada, caso o pagamento não seja realizado/identificado (boleto bancário) em tempo hábil para a separação dos produtos.
+
+Para seu maior controle, recomendamos que você mantenha este comunicado até a entrega das mercadorias.
+Guarde o número de seu pedido, ele é a identificação necessária para você obter qualquer informação sobre sua compra
+
+Todos os pedidos realizados estão sujeitos à confirmação de disponibilidade dos itens em nossos estoques.
+Em caso de divergência, nossa equipe entrará em contato por telefone. Produtos em falta poderão ser substituídos por similares ou excluídos de seu pedido e o valor reembolsado.
+
+Your shipping confirmation is below.
+Detalhes do seu pedido #1000000042
+Endereço
+
+Fulano de Tal
+Rua Exemplar
+1234
+Complemento
+Bairro
+Cidade, Estado, 00000-000
+Brasil
+T: (00) 99999-9999
+
+Forma de Envio
+
+Receber em Casa - Receba em casa (Cidade)
+
+Fulano de Tal
+Rua Exemplar
+1234
+Complemento
+Bairro
+Cidade, Estado, 00000-000
+Brasil
+T: (00) 99999-9999
+Data selecionada para entrega 02/02/2121
+9:00 as 12:00
+
+Forma de Pagamento
+
+Cartão de Crédito
+
+    Braspag-Master - ##########1234
+
+    R$2.448.494,16 Parcelado em 1 vez"
+
+Itens 	Quantidade 	Preço
+
+Primeiro Item
+
+SKU: 1231234
+	10 	R$0,42
+
+2º produto
+
+SKU: 1233210
+	2 	R$24.242,42
+
+Texto depois
+
+Item 3
+
+SKU: 1212121
+	100 	R$2.424.242,42
+Subtotal 	R$2.448.485,26
+Entrega & Manuseio 	R$8,90
+Total 	R$2.448.494,16
+
+Em caso de compra com boleto, clique no botão abaixo para visualizar a segunda via.
+
+Cartão de Crédito
+    Cartão de Crédito
+
+    Braspag-Master - ##########1234
+
+    R$2.448.494,16 Parcelado em 1 vez"
+
+Atenciosamente,
+Equipe de atendimento ao Cliente Bistek.com.br

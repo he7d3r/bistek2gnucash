@@ -1,9 +1,10 @@
 import pandas as pd
 from pandas.testing import assert_frame_equal
 
-from main import (get_df_from_tuples,
-                  get_item_tuples,
-                  clean_dataframe)
+from src.main import (get_df_from_tuples,
+                      get_item_tuples,
+                      clean_dataframe,
+                      get_text)
 
 
 def get_one_item_text():
@@ -113,3 +114,15 @@ def test_clean_dataframe_multiple_items():
     actual = clean_dataframe(df)
     expected = get_many_items_dataframe_clean()
     assert_frame_equal(actual, expected)
+
+
+def test_get_text_contains_basic_text():
+    text = get_text('tests/fake-text.txt')
+    order_header_text = 'Detalhes do seu pedido'
+    assert order_header_text in text
+    table_header_text = 'Itens 	Quantidade 	Preço'
+    assert table_header_text in text
+    code_prefix_text = 'SKU'
+    assert code_prefix_text in text
+    total_text = 'Total'
+    assert total_text in text
