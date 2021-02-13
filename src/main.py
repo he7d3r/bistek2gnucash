@@ -25,13 +25,14 @@ def get_df_from_tuples(tuples):
                         columns=['description', 'code', 'amount', 'value'])
 
 
+def parse_float(text):
+    return float(text.replace('.', '').replace(',', '.'))
+
+
 def clean_dataframe(df):
     df['code'] = df['code'].astype(int)
     df['amount'] = df['amount'].astype(int)
-    df['value'] = df['value']\
-        .str.replace('.', '')\
-        .str.replace(',', '.')\
-        .astype(float)
+    df['value'] = df['value'].apply(parse_float)
     return df
 
 
@@ -45,6 +46,8 @@ def extract_date(text):
     match = re.search(regex_date, text)
     date_time_string = match.group(1)
     return dateparser.parse(date_time_string).date()
+
+
 
 
 def main(file_name):
