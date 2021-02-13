@@ -48,16 +48,17 @@ def extract_date(text):
     return dateparser.parse(date_time_string).date()
 
 
-
-
-def main(file_name):
+def main(args):
     """ Process the order data """
-    text = get_text(file_name)
+    filename_in = args[1]
+    filename_out = args[2]
+    text = get_text(filename_in)
     tuples = get_item_tuples(text)
     df = get_df_from_tuples(tuples)
     clean_df = clean_dataframe(df)
-    print(clean_df.tail())
+    clean_df['date'] = extract_date(text)
+    clean_df.to_csv(filename_out, index=False)
 
 
 if __name__ == "__main__":
-    main(sys.argv[1])
+    main(sys.argv)
