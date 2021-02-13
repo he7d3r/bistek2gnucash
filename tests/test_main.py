@@ -1,7 +1,9 @@
+import datetime
+
 import pandas as pd
 from pandas.testing import assert_frame_equal
 
-from src.main import (get_df_from_tuples,
+from src.main import (get_df_from_tuples, extract_date,
                       get_item_tuples,
                       clean_dataframe,
                       get_text)
@@ -126,3 +128,10 @@ def test_get_text_contains_basic_text():
     assert code_prefix_text in text
     total_text = 'Total'
     assert total_text in text
+
+
+def test_extract_date():
+    sample_text = 'pedido de nº 123 feito em 1 de fev de 2021 15:16:17 foi'
+    actual = extract_date(sample_text)
+    expected = datetime.date(2021, 2, 1)
+    assert actual == expected

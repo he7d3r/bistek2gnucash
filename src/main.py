@@ -7,9 +7,10 @@ __author__ = "Helder Geovane Gomes de Lima"
 __version__ = "0.1.0"
 __license__ = "MIT"
 
-import sys
 import re
+import sys
 
+import dateparser
 import pandas as pd
 
 
@@ -37,6 +38,13 @@ def clean_dataframe(df):
 def get_text(file_name):
     with open(file_name, 'r') as f:
         return f.read()
+
+
+def extract_date(text):
+    regex_date = r'feito em (\d+ de .{0,9} de \d{4} \d{2}:\d{2}:\d{2}) foi'
+    match = re.search(regex_date, text)
+    date_time_string = match.group(1)
+    return dateparser.parse(date_time_string).date()
 
 
 def main(file_name):
