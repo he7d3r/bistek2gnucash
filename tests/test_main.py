@@ -4,7 +4,8 @@ import pandas as pd
 from pandas.testing import assert_frame_equal
 from src.main import (append_delivery_fee, clean_dataframe, extract_date,
                       extract_delivery_fee, extract_total, get_df_from_tuples,
-                      get_item_tuples, get_text, parse_float)
+                      get_gnucash_dataframe, get_item_tuples, get_text,
+                      parse_float)
 
 
 def get_one_item_text():
@@ -140,6 +141,42 @@ def test_extract_date():
     actual = extract_date(sample_text)
     expected = datetime.date(2021, 2, 1)
     assert actual == expected
+
+
+def test_get_gnucash_dataframe():
+    df = get_many_items_dataframe_clean()
+    df['date'] = datetime.date(2021, 2, 1)
+    actual = get_gnucash_dataframe(df, col_names={
+        'date': 'Date',
+        'description': 'Memo',
+        'value': 'Deposit'},
+        gnucash={'description': 'foo',
+                 'expense': 'bar',
+                 'payment': 'baz',
+                 'currency': 'qux'})
+    actual_columns = actual.columns.tolist()
+    expected_columns = ['Date', 'Description', 'Transaction Commodity',
+                        # 'Action',
+                        'Memo', 'Account', 'Deposit',
+                        # 'Reconciled',
+                        'Price']
+    assert actual_columns == expected_columns
+    assert not pd.isnull(actual.loc[0, 'Date'])
+    assert actual.loc[1:, 'Date'].isnull().all()
+
+    assert actual.loc[1:, 'Description'].isnull().all()
+    assert not pd.isnull(actual.loc[0, 'Description'])
+    assert actual.loc[0, 'Description'] == 'foo'
+
+    assert actual.loc[1:, 'Transaction Commodity'].isnull().all()
+    assert not pd.isnull(actual.loc[0, 'Transaction Commodity'])
+    assert actual.loc[0, 'Transaction Commodity'] == 'qux'
+
+    assert not pd.isnull(actual.loc[len(actual)-1, 'Account'])
+    assert (actual.loc[0:len(actual)-2, 'Account'] == 'bar').all()
+    assert actual.loc[len(actual)-1, 'Account'] == 'baz'
+
+    assert (actual['Price'] == 1).all()
 
 
 def test_parse_float():

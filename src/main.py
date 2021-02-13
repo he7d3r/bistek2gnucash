@@ -11,6 +11,7 @@ import re
 import sys
 
 import dateparser
+import numpy as np
 import pandas as pd
 
 
@@ -71,6 +72,32 @@ def append_delivery_fee(df, fee):
     return result
 
 
+def get_gnucash_dataframe(df,
+                          col_names=None,
+                          gnucash={'description': 'Bistek Supermercados',
+                                   'expense': 'Expenses:Groceries',
+                                   'payment': 'Liabilities:Credit Card',
+                                   'currency': 'CURRENCY::BRL'}):
+    if col_names:
+        df = df.rename(columns=col_names)
+
+    df.loc[1:, 'Date'] = np.nan
+    df.at[0, 'Description'] = gnucash['description']
+    df.at[0, 'Transaction Commodity'] = gnucash['currency']
+
+    df = df.append(pd.Series(dtype=float), ignore_index=True)
+    df.at[len(df)-1, 'Deposit'] = -df['Deposit'].sum()
+
+    df['Account'] = gnucash['expense']
+    df.at[len(df)-1, 'Account'] = gnucash['payment']
+    # The price of one Real is... 1 BRL (no convension needed)
+    df['Price'] = 1
+    col_order = ['Date', 'Description', 'Transaction Commodity',
+                 'Memo', 'Account', 'Deposit', 'Price']
+    result = df[col_order]
+    return result
+
+
 def main(args):
     """ Process the order data """
     filename_in = args[1]
@@ -82,6 +109,14 @@ def main(args):
     delivery_fee = extract_delivery_fee(text)
     clean_df = append_delivery_fee(clean_df, delivery_fee)
     clean_df['date'] = extract_date(text)
+    clean_df = get_gnucash_dataframe(
+        clean_df,
+        col_names={
+            'date': 'Date',
+            'description': 'Memo',
+            'value': 'Deposit'})
+    # Sanity check
+    assert clean_df['Deposit'].values[-1] == -extract_total(text)
     clean_df.to_csv(filename_out, index=False)
 
 
