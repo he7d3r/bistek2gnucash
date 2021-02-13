@@ -55,6 +55,15 @@ def extract_delivery_fee(text):
     return result
 
 
+def append_delivery_fee(df, fee):
+    result = df.append(pd.Series(dtype=float), ignore_index=True)
+    last_index = len(result)-1
+    result.at[last_index, 'description'] = 'Entrega & Manuseio'
+    result.at[last_index, 'amount'] = 1
+    result.at[last_index, 'value'] = fee
+    return result
+
+
 def main(args):
     """ Process the order data """
     filename_in = args[1]
@@ -63,6 +72,8 @@ def main(args):
     tuples = get_item_tuples(text)
     df = get_df_from_tuples(tuples)
     clean_df = clean_dataframe(df)
+    delivery_fee = extract_delivery_fee(text)
+    clean_df = append_delivery_fee(clean_df, delivery_fee)
     clean_df['date'] = extract_date(text)
     clean_df.to_csv(filename_out, index=False)
 

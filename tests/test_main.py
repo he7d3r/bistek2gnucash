@@ -2,9 +2,9 @@ import datetime
 
 import pandas as pd
 from pandas.testing import assert_frame_equal
-from src.main import (clean_dataframe, extract_date, extract_delivery_fee,
-                      get_df_from_tuples, get_item_tuples, get_text,
-                      parse_float)
+from src.main import (append_delivery_fee, clean_dataframe, extract_date,
+                      extract_delivery_fee, get_df_from_tuples,
+                      get_item_tuples, get_text, parse_float)
 
 
 def get_one_item_text():
@@ -159,3 +159,12 @@ def test_extract_delivery_fee():
     actual = extract_delivery_fee(sample_text)
     expected = 8.90
     assert actual == expected
+
+
+def test_append_delivery_fee():
+    sample_df = get_many_items_dataframe_clean()
+    updated_df = append_delivery_fee(sample_df, 12.34)
+    actual_len = len(updated_df)
+    expected_len = len(sample_df) + 1
+    assert actual_len == expected_len
+    assert updated_df['value'].values[-1] == 12.34
