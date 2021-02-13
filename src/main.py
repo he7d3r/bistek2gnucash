@@ -55,6 +55,13 @@ def extract_delivery_fee(text):
     return result
 
 
+def extract_total(text):
+    regex_total = r'Total 	R\$(\d+,\d{2})$'
+    match = re.search(regex_total, text, re.M)
+    result = parse_float(match.group(1))
+    return result
+
+
 def append_delivery_fee(df, fee):
     result = df.append(pd.Series(dtype=float), ignore_index=True)
     last_index = len(result)-1

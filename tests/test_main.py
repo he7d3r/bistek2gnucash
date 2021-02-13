@@ -3,7 +3,7 @@ import datetime
 import pandas as pd
 from pandas.testing import assert_frame_equal
 from src.main import (append_delivery_fee, clean_dataframe, extract_date,
-                      extract_delivery_fee, get_df_from_tuples,
+                      extract_delivery_fee, extract_total, get_df_from_tuples,
                       get_item_tuples, get_text, parse_float)
 
 
@@ -72,6 +72,13 @@ def get_many_items_dataframe_clean():
         'amount': [10, 2, 100],
         'value': [0.42, 24242.42, 2424242.42]
     })
+
+
+def get_summary_text():
+    result = ('Subtotal 	R$432,10\n'
+              'Entrega & Manuseio 	R$8,90\n'
+              'Total 	R$441,00')
+    return result
 
 
 def test_regex_for_single_item():
@@ -152,10 +159,15 @@ def test_parse_float():
     assert actual == expected
 
 
+def test_extract_total():
+    sample_text = get_summary_text()
+    actual = extract_total(sample_text)
+    expected = 441.00
+    assert actual == expected
+
+
 def test_extract_delivery_fee():
-    sample_text = ('Subtotal 	R$432,10\n'
-                   'Entrega & Manuseio 	R$8,90\n'
-                   'Total 	R$441,00')
+    sample_text = get_summary_text()
     actual = extract_delivery_fee(sample_text)
     expected = 8.90
     assert actual == expected
