@@ -48,6 +48,13 @@ def extract_date(text):
     return dateparser.parse(date_time_string).date()
 
 
+def extract_delivery_fee(text):
+    regex_delivery_fee = r'Entrega & Manuseio 	R\$(\d+,\d{2})$'
+    match = re.search(regex_delivery_fee, text, re.M)
+    result = parse_float(match.group(1))
+    return result
+
+
 def main(args):
     """ Process the order data """
     filename_in = args[1]

@@ -2,8 +2,9 @@ import datetime
 
 import pandas as pd
 from pandas.testing import assert_frame_equal
-from src.main import (clean_dataframe, extract_date, get_df_from_tuples,
-                      get_item_tuples, get_text, parse_float)
+from src.main import (clean_dataframe, extract_date, extract_delivery_fee,
+                      get_df_from_tuples, get_item_tuples, get_text,
+                      parse_float)
 
 
 def get_one_item_text():
@@ -148,4 +149,13 @@ def test_parse_float():
     sample = '98.765.432,10'
     actual = parse_float(sample)
     expected = 98765432.10
+    assert actual == expected
+
+
+def test_extract_delivery_fee():
+    sample_text = ('Subtotal 	R$432,10\n'
+                   'Entrega & Manuseio 	R$8,90\n'
+                   'Total 	R$441,00')
+    actual = extract_delivery_fee(sample_text)
+    expected = 8.90
     assert actual == expected
